@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Tu préfères ?
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-col col-12>
+        <button *ngIf="!vote" class="choice" (click)="setPrefer(1)" ion-button color="danger">{{prefer.first_choice}}</button>
+        <button *ngIf="vote" class="choice" (click)="setPrefer(1)" ion-button color="danger"> Votes : {{prefer.first_vote}}
+          <span class="percent">{{ (100 * prefer.first_vote) / total_vote | number : '1.0-0'}}%</span></button>
+      </ion-col>
+      <ion-col col-12>
+        <button *ngIf="!vote" class="choice" (click)="setPrefer(2)" ion-button>{{prefer.second_choice}}</button>
+        <button *ngIf="vote" class="choice" (click)="setPrefer(2)" ion-button>Votes : {{prefer.second_vote}}
+          <span class="percent">{{ (100 * prefer.second_vote) / total_vote | number : '1.0-0'}}% </span></button>
+      </ion-col>
+      <ion-col col-12>
+        <button ion-button color="dark" outline (click)="getPreferRandom()">Passer</button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
