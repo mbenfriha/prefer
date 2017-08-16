@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {OnInit} from 'angular2/core';
+import { OnInit } from 'angular2/core';
 
 import { PreferService } from '../../providers/prefer-service';
 
@@ -39,7 +39,6 @@ export class PreferComponent {
       this.preferService
         .setPrefer(choice, this.prefer.id).subscribe(
         (data) => {
-          console.log("ok");
           this.vote = true;
         }
       );
@@ -49,6 +48,9 @@ export class PreferComponent {
     }
   }
 
+
+
+  d
   ngOnInit() {
     this.getPreferRandom();
   }

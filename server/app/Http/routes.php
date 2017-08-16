@@ -11,6 +11,11 @@
 |
 */
 
-$app->get('prefer/{id}', 'Controller@getPrefer');
-$app->get('random', 'Controller@getRandomPrefer');
-$app->get('prefer/{id_prefer}/{choice}', 'Controller@setChoice');
+
+
+$app->group(['prefix' => 'prefer'], function($app) {
+    $app->get('/random', 'App\Http\Controllers\Controller@getRandomPrefer');
+    $app->get('/{id_prefer}/{choice}', 'App\Http\Controllers\Controller@setChoice');
+});
+
+$app->post('auth/login', 'AuthController@postLogin');

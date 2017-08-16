@@ -21,7 +21,7 @@ export class PreferService {
 
 
   getPreferRandom() {
-    return this.http.get(this.apiUrl + 'random')
+    return this.http.get(this.apiUrl + 'prefer/random')
       .map(res => res.json())
   }
   setPrefer(choice: number, id: number) {

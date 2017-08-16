@@ -1,11 +1,11 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Prefer
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+
 
 <ion-content padding>
-  <button [navPush]="preferComponent">Jouer</button>
+  <div class="home">
+    <div class="logo"><img src="../../assets/img/logo.png" alt=""></div>
+    <button ion-button full [navPush]="preferComponent">Jouer</button>
+    <button ion-button full [navPush]="preferComponent">Profil</button>
+    <button ion-button full [navPush]="preferComponent">Proposer une question</button>
+    <button ion-button full [navPush]="preferComponent" color="danger">Nous soutenir</button>
+  </div>
 </ion-content>

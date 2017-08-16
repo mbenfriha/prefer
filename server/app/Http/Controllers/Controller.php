@@ -10,11 +10,6 @@ class Controller extends BaseController
 {
 
 
-    public function getPrefer($id)
-    {
-        return Prefer::findOrFail($id);
-    }
-
     public function getRandomPrefer()
     {
         return Prefer::all()->random(1);
