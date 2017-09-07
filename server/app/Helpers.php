@@ -1,5 +1,5 @@
-<?php
 
+<?php
 if ( ! function_exists('config_path'))
 {
     /**

@@ -24,6 +24,12 @@ export class PreferService {
     return this.http.get(this.apiUrl + 'prefer/random')
       .map(res => res.json())
   }
+
+  getPreferRandomByCategory(id: number) {
+    return this.http.get(this.apiUrl + 'prefer/random/'+ id )
+      .map(res => res.json())
+  }
+
   setPrefer(choice: number, id: number) {
     return this.http.get(this.apiUrl + 'prefer/' + id + '/' + choice)
       .map(res => res.json())

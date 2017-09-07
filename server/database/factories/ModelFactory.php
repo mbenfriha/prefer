@@ -11,9 +11,9 @@
 |
 */
 
-$factory->define(App\User::class, function ($faker) {
+$factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
+        'username' => $faker->userName,
+        'email' => $faker->unique()->email,
     ];
 });

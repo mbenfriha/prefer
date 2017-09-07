@@ -1,6 +1,6 @@
 <?php
 
-use App\Prefer;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,13 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $prefers = [
-            ["first_choice" => "Le chocolat", "second_choice" => "La fraise"],
-            ["first_choice" => "Lire des livres", "second_choice" => "Regarder des films"],
-            ["first_choice" => "Batman", "second_choice" => "Superman"],
-        ];
+        Model::unguard();
 
-        foreach($prefers as $prefer)
-            Prefer::create($prefer);
+        $this->call(UsersTableSeeder::class);
+
+        Model::reguard();
     }
 }

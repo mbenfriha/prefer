@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { OnInit } from 'angular2/core';
 
 import { PreferService } from '../../providers/prefer-service';
@@ -15,14 +15,15 @@ export class PreferComponent {
   total_vote = 0;
 
   constructor(public navCtrl: NavController,
-              private preferService: PreferService) {
+              private preferService: PreferService,
+              private navParams: NavParams) {
 
   }
 
   getPreferRandom(): void {
     this.vote = false;
     this.preferService
-      .getPreferRandom()
+      .getPreferRandomByCategory(this.navParams.get('id'))
       .subscribe((prefer: any) => {
         this.prefer = prefer;
         this.total_vote = prefer.second_vote + prefer.first_vote;

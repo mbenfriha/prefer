@@ -23,16 +23,14 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-$app->withFacades();
-$app->configure('jwt');
 
-$app->withEloquent();
+ $app->withEloquent();
 
-class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
-/** This gives you finer control over the payloads you create if you require it.
- *  Source: https://github.com/tymondesigns/jwt-auth/wiki/Installation
- */
-class_alias('Tymon\JWTAuth\Facades\JWTFactory', 'JWTFactory'); // Optional
+$app->withFacades(true, [
+    Tymon\JWTAuth\Facades\JWTAuth::class => 'JWTAuth',
+    Tymon\JWTAuth\Facades\JWTFactory::class => 'JWTFactory'
+]);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -66,13 +64,12 @@ $app->singleton(
 |
 */
 
-$app->middleware([
-    'cors' => 'palanik\lumen\Middleware\LumenCors',
-]);
+// $app->middleware([
+//    App\Http\Middleware\ExampleMiddleware::class
+// ]);
 
  $app->routeMiddleware([
-     'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
-     'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,
+     'auth' => App\Http\Middleware\Authenticate::class,
  ]);
 
 /*
@@ -87,9 +84,9 @@ $app->middleware([
 */
 
  $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register('Tymon\JWTAuth\Providers\JWTAuthServiceProvider');
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
 
 /*
@@ -103,12 +100,13 @@ $app->register('Tymon\JWTAuth\Providers\JWTAuthServiceProvider');
 |
 */
 
-$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
-    require __DIR__.'/../app/Http/routes.php';
-});
-
-
 $app->alias('cache', 'Illuminate\Cache\CacheManager');
 $app->alias('auth', 'Illuminate\Auth\AuthManager');
+$app->alias('JWTAuth', 'Tymon\JWTAuth\Facades\JWTAuth::class');
+$app->alias('JWTFactory', 'Tymon\JWTAuthFacades\JWTFactory::class`');
+
+$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
+    require __DIR__.'/../routes/web.php';
+});
 
 return $app;

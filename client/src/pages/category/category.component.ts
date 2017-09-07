@@ -4,20 +4,24 @@ import { Storage } from '@ionic/storage';
 import { PreferComponent } from '../prefer/prefer.component';
 
 import { LoginPage } from '../login/login.component';
-import { CategoryPage } from '../category/category.component';
 
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-category',
+  templateUrl: 'category.html'
 })
-export class HomePage {
+export class CategoryPage {
 
   preferComponent = PreferComponent;
-  CategoryPage = CategoryPage;
 
   constructor(public navCtrl: NavController, private storage: Storage) {
 
+  }
+
+  pushPage(id) {
+    this.navCtrl.push(PreferComponent, {
+      id
+    });
   }
 
   ngOnInit() {

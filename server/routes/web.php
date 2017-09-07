@@ -11,11 +11,9 @@
 |
 */
 
-
-
-$app->group(['prefix' => 'prefer'], function($app) {
-    $app->get('/random', 'App\Http\Controllers\Controller@getRandomPrefer');
-    $app->get('/{id_prefer}/{choice}', 'App\Http\Controllers\Controller@setChoice');
+$app->get('/', function () use ($app) {
+    return $app->version();
 });
 
-$app->post('auth/login', 'AuthController@postLogin');
+$app->post('/auth/login', 'AuthController@loginPost');
+$app->post('/auth/register', 'AuthController@registerPost');
