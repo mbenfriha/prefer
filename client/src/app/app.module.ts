@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import {AuthHttp, AuthConfig, JwtHelper} from 'angular2-jwt';
 import { Storage } from '@ionic/storage';
+import { Facebook } from '@ionic-native/facebook';
 
 import { HttpModule, Http, RequestOptions } from '@angular/http';
 
@@ -58,6 +59,7 @@ export function authHttpServiceFactory(http) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     PreferService,
     AuthService,
+    Facebook,
     {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,
@@ -66,3 +68,6 @@ export function authHttpServiceFactory(http) {
   ]
 })
 export class AppModule {}
+
+
+

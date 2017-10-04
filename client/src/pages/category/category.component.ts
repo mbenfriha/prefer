@@ -25,8 +25,7 @@ export class CategoryPage {
   }
 
   ngOnInit() {
-    this.storage.get('User').then((val) => {
-      console.log('Your age is', val);
+    this.storage.get('user').then((val) => {
       if (!val)
         this.navCtrl.push(LoginPage);
     });

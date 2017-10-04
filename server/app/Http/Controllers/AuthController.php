@@ -7,7 +7,8 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\User;
 
@@ -42,28 +43,53 @@ class AuthController extends Controller
             return response()->json(['token_absent' => $e->getMessage()], $e->getStatusCode());
         }
 
-        return response()->json(compact('token'));
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        return response()->json(compact('token', 'user'));
+    }
+
+    public function facebookLogin(Request $request) {
+
     }
 
     public function registerPost()
     {
 
-        $rules = array(
-            'email'   => 'required|email|max:255',
-            'password'      => 'required|string',
-        );
+        $messages = [
+            'required'  => 'Le champ :attribute est requis.',
+            'unique'    => ":attribute est déjà pris",
+            'email'     => "L'email n'est pas une adresse mail valide"
+        ];
 
-        $this->validate(Request::instance(), $rules);
+        $rules = [
+            'email'     => 'required|email|unique:users|max:255',
+            'username'  => 'required|unique:users|string',
+            'password'  => 'required|string',
+            'birthdate' => 'required|date'
+        ];
+
+        $validator = Validator::make(Input::all(), $rules, $messages);
+
+        if($validator->fails()){
+            return response()->json(['error' => true, 'message' => $validator->errors()]);
+        }
+
+
+        $age = intval(date('Y', time() - strtotime(Input::get('birthdate')))) - 1970;
+        $adult = $age >= 18 ? true : false;
 
         try{
             $user = new User();
             $user->email = Input::get('email');
+            $user->username = Input::get('username');
+            $user->birthdate = Input::get('birthdate');
+            $user->adult = $adult;
             $user->password = app('hash')->make(Input::get('password'));
             $user->save();
             return response()->json($user);
         }
         catch(\Exception $e){
-            return response()->json($e->getMessage());
+            return response()->json(["error" => true, "message" => $e]);
         }
 
 
